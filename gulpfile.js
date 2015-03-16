@@ -5,6 +5,8 @@ var gulp = require('gulp'),
     jadeLang = require('jade'),
     jade = require('gulp-jade'),
     sass = require('gulp-sass'),
+    gutil = require('gutil'),
+    jshint = require('gulp-jshint'),
     sourcemaps = require('gulp-sourcemaps');
 
 var outputDir = 'builds/development',
@@ -37,6 +39,17 @@ gulp.task('js', function() {
         .pipe(connect.reload());
 });
 
+gulp.task('lint', function() {
+    var files = [
+      './src/js/**/*.js',
+      //'!./src/js/modules/signalr.js' - sample NOT
+    ];
+    files.push('./gulpfile.js');
+    return gulp.src(files)
+      .pipe(jshint('.jshintrc'))
+      .pipe(jshint.reporter('jshint-stylish'));
+});
+
 gulp.task('sass', function() {
   var config = {};
 
@@ -67,7 +80,7 @@ gulp.task('connect', function() {
 gulp.task('watch', function() {
   gulp.watch('src/templates/**/*.jade', ['jade']);
   gulp.watch('src/sass/**/*.scss', ['sass']);
-  gulp.watch('src/js/**/*.js', ['js']);
+  gulp.watch('src/js/**/*.js', ['js', 'lint']);
 });
 
-gulp.task('default', ['jade', 'images', 'sass', 'watch', 'connect']);
+gulp.task('default', ['jade', 'images', 'sass', 'watch', 'connect', 'js', 'lint']);
