@@ -186,3 +186,15 @@ header {
     display: none;
   }
 }
+
+//js
+
+.js-task {
+  padding: 20px;
+}
+.js-task__p {
+  margin: 0 0 10px 0;
+}
+.js-task__p span {
+  cursor: pointer;
+}

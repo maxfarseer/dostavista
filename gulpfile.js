@@ -31,6 +31,12 @@ gulp.task('images', function() {
         .pipe(gulp.dest(outputDir+'/i'));
 });
 
+gulp.task('js', function() {
+  return gulp.src('src/js/*.js')
+        .pipe(gulp.dest(outputDir+'/js'))
+        .pipe(connect.reload());
+});
+
 gulp.task('sass', function() {
   var config = {};
 
@@ -61,6 +67,7 @@ gulp.task('connect', function() {
 gulp.task('watch', function() {
   gulp.watch('src/templates/**/*.jade', ['jade']);
   gulp.watch('src/sass/**/*.scss', ['sass']);
+  gulp.watch('src/js/**/*.js', ['js']);
 });
 
 gulp.task('default', ['jade', 'images', 'sass', 'watch', 'connect']);
